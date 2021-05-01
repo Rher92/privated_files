@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load customized_templates_tags %}
+
+{% block content %}
+  <a class="btn btn-primary mb-4" href="{% url 'form_upload' %}">Upload File</a>
+  <div>
+    <p>Uploaded buckets:</p>
+    <ul>
+      {% for bucket in buckets %}
+      <li>
+        <small>{{ bucket.name }}</small>
+        <small>(Uploaded by: {{ bucket.user.username }})</small>
+        <small>(Uploaded at: {{ bucket.uploaded_at }})</small>
+        <small>(Files: {{ bucket.files.all|length }})</small>
+        <ul>
+          {% for file in bucket.files.all %}
+            <li>
+              <small>
+                <a href="{{ file.files.url }}">{{ file.files.name|real_name }}</a>
+              </small>
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+version: '3.7'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: django_privated_file
+    restart: on-failure:10
+    command: /start
+    volumes:
+      - .:/app
+      - ./staticfiles:/app/staticfiles
+      - ./mediafiles:/app/mediafiles
+    ports:
+      - 8000
+    env_file:
+      - ./envs/.development
+    depends_on:
+      - postgres
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./compose/local/nginx/Dockerfile
+    image: nginx_privated_file
+    restart: on-failure:10
+    depends_on:
+      - django
+    volumes:
+      - ./staticfiles:/app/staticfiles
+      - ./mediafiles:/app/mediafiles
+    ports:
+      - 80:80
+
+  postgres:
+    image: postgres:12.0-alpine 
+    restart: on-failure:10
+    expose:
+      - 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/      
+    environment:
+      - POSTGRES_DB=privated_file
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  postgres_data:
