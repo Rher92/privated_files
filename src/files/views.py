@@ -30,6 +30,7 @@ class FileFieldView(FormView):
         """Return the URL to redirect to after processing a valid form."""
         return reverse('home')
 
+
 class ProtectFiles(View):
     def dispatch(self, request, *args, **kwargs):
         allow_request = False
@@ -42,4 +43,4 @@ class ProtectFiles(View):
             response['X-Accel-Redirect'] = '/protected_media/' + path
             return response
         else:
-            return HttpResponseForbidden('Not authorized to access this media.')    
+            return HttpResponseForbidden('Not authorized to access this media.')

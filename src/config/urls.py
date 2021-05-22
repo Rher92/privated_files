@@ -14,12 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import path, re_path
 from files.views import home, ProtectFiles, FileFieldView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path("home/", home, name="home"),
-    path("uploads/", FileFieldView.as_view(), name="form_upload"),
+    path("uploads/", login_required(FileFieldView.as_view()), name="form_upload"),
     re_path(r'^media/(?P<path>.*)', ProtectFiles.as_view(), name='protected_files'),
 ]
