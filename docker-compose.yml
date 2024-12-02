@@ -31,7 +31,7 @@ services:
       - ./staticfiles:/app/staticfiles
       - ./mediafiles:/app/mediafiles
     ports:
-      - 80:80
+      - 8080:80
 
   postgres:
     image: postgres:12.0-alpine 
