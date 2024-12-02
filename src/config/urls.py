@@ -20,7 +20,7 @@ from files.views import home, ProtectFiles, FileFieldView
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path("", home, name="home"),
+    path("home/", home, name="home"),
     path("uploads/", login_required(FileFieldView.as_view()), name="form_upload"),
     re_path(r'^media/(?P<path>.*)', ProtectFiles.as_view(), name='protected_files'),
 ]
