@@ -1,0 +1,12 @@
+name: Say Hello
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  hellow_world:
+    runs-on: ubuntu-22.02
+    steps:
+      - run: echo "Hello Roger"
